@@ -33,7 +33,7 @@ public class LoginPage {
 
     public WebElement getLoginButtonInput() {
 
-        WebElement name = driver.findElement(By.id("Login-button"));
+        WebElement name = driver.findElement(By.id("login-button"));
 
         return name;
     }

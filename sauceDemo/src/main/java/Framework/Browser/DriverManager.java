@@ -8,6 +8,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.time.Duration;
+
 public class DriverManager {
 
     private static WebDriver driver;
@@ -42,14 +44,15 @@ public class DriverManager {
             case HEADLESS:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions headlessOptions = new ChromeOptions();
-                headlessOptions.addArguments("--headless");
-                headlessOptions.addArguments("--window-size(1366, 768)");
+                headlessOptions.addArguments("--headless=new");
+                headlessOptions.addArguments("--window-size=1366,768");
                 driver =  new ChromeDriver(headlessOptions);
                 break;
 
 
 
         }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     return driver;
     }
 

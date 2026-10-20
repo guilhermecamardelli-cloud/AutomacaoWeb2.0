@@ -13,7 +13,7 @@ public class TesteBase extends DriverManager {
 
     public static WebDriver getDriverManager (){
 
-        driver = getDriver(TypeBrowser.CHROME);
+        driver = getDriver(TypeBrowser.valueOf(System.getProperty("browser", "CHROME")));
         return driver;
 
     }
