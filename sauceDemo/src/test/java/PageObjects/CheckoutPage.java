@@ -1,5 +1,6 @@
 package PageObjects;
 
+import Framework.Browser.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,31 +8,31 @@ import org.openqa.selenium.WebElement;
 public class CheckoutPage {
 
     private WebDriver driver;
+    private Waits waits;
 
     public CheckoutPage(WebDriver driver){
 
         this.driver = driver;
-
+        waits = new Waits(this.driver);
     }
 
     public WebElement getFirstNameInput(){
 
-        return driver.findElement(By.id("first-name"));
-
+        return waits.visibilityOfElement(By.id("first-name"));
     }
 
-    public WebElement getLastNameNameInput() {
+    public WebElement getLastNameInput(){
 
-        return driver.findElement(By.id("last-name"));
+        return waits.visibilityOfElement(By.id("last-name"));
     }
 
-    public WebElement getZipCodeInput() {
+    public WebElement getZipCodeInput(){
 
-        return driver.findElement(By.id("postal-code"));
+        return waits.visibilityOfElement(By.id("postal-code"));
     }
 
-    public WebElement getContinueButton() {
+    public WebElement getContinueButton(){
 
-        return driver.findElement(By.id("continue"));
+        return waits.visibilityOfElement(By.id("continue"));
     }
 }

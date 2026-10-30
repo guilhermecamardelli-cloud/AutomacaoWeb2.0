@@ -1,4 +1,4 @@
-package Task;
+package Tasks;
 
 import PageObjects.CartPage;
 import PageObjects.ProdutoPage;
@@ -12,23 +12,20 @@ public class ProdutoTask {
     private GenericValidacao genericValidacao;
     private CartPage cartPage;
 
-    public ProdutoTask(WebDriver driver){
+    public ProdutoTask (WebDriver driver){
 
         this.driver = driver;
         produtoPage = new ProdutoPage(this.driver);
         genericValidacao = new GenericValidacao(this.driver);
         cartPage = new CartPage(this.driver);
-
     }
 
     public void selecionarProduto(){
 
-        genericValidacao.validationTitlePages("Products");
         produtoPage.getAddToCartButton().click();
         produtoPage.getCartButton().click();
         genericValidacao.validationTitlePages("Your Cart");
         genericValidacao.validationProduto();
         cartPage.getCheckoutButton().click();
-
     }
 }

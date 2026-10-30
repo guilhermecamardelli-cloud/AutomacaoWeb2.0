@@ -1,44 +1,39 @@
 package PageObjects;
 
+import Framework.Browser.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class FinishPage {
 
     private WebDriver driver;
+    private Waits waits;
 
     public FinishPage(WebDriver driver){
 
         this.driver = driver;
+        waits = new Waits(this.driver);
     }
 
-    public WebElement getFinnishButton(){
+    public WebElement getFinishButton(){
 
-        return driver.findElement(By.id("finish"));
+        return waits.visibilityOfElement(By.id("finish"));
     }
 
-    public WebElement getFinnishTextLabel() {
+    public WebElement getFinishTextLabel(){
 
-        return driver.findElement(By.className("complete-header"));
-
+        return waits.visibilityOfElement(By.className("complete-header"));
     }
 
-    public WebElement getMenuButton() {
+    public WebElement getMenuButton(){
 
-        return driver.findElement(By.id("react-burger-menu-btn"));
-
+        return waits.visibilityOfElement(By.id("react-burger-menu-btn"));
     }
 
-    public WebElement getLogoutLink() {
+    // o menu lateral abre com animacao, entao espera o link ficar clicavel
+    public WebElement getMenuLogoutLink(){
 
-        // o menu lateral abre com animacao, entao espera o link ficar clicavel
-        return new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.id("logout_sidebar_link")));
-
+        return waits.clickableElement(By.id("logout_sidebar_link"));
     }
 }

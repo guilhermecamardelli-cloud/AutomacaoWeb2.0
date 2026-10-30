@@ -8,7 +8,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,16 +32,15 @@ public class DriverManager {
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--start-maximized");
-                edgeOptions.addArguments("--incognito");
+                edgeOptions.addArguments("--inprivate");
+                edgeOptions.setExperimentalOption("prefs", prefsSemAvisoDeSenha());
                 driver =  new EdgeDriver(edgeOptions);
                 break;
 
-            case FIREFORX:
+            case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
-
-
 
             case HEADLESS:
                 WebDriverManager.chromedriver().setup();
@@ -53,10 +51,7 @@ public class DriverManager {
                 driver =  new ChromeDriver(headlessOptions);
                 break;
 
-
-
         }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     return driver;
     }
 

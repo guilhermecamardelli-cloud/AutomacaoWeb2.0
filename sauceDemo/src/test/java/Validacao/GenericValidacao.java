@@ -1,42 +1,46 @@
 package Validacao;
 
+import Framework.Browser.Waits;
+import Framework.Utils.TakeScreenshot;
 import PageObjects.GenericPage;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class GenericValidacao {
 
-    WebDriver driver;
+    private WebDriver driver;
     private GenericPage genericPage;
+    private Waits waits;
 
     public GenericValidacao(WebDriver driver){
+
         this.driver = driver;
         genericPage = new GenericPage(this.driver);
-
+        waits = new Waits(this.driver);
     }
 
+    // AssertionError nao e Exception, por isso o catch pega os dois: assim o print de erro sempre sai no relatorio
     public void validationTitlePages(String texto){
 
-        // espera a pagina nova carregar, senao o titulo lido pode ser o da pagina anterior
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.textToBe(By.className("title"), texto));
-        } catch (TimeoutException e) {
-            // segue para o assert, que mostra o texto esperado e o encontrado
+            // espera a pagina nova carregar, senao o titulo lido pode ser o da pagina anterior
+            waits.textToBe(GenericPage.TITLE, texto);
+            Assertions.assertEquals(texto, genericPage.getTextTitle().getText());
+            TakeScreenshot.screenshotPage(driver, texto);
+        } catch (AssertionError | RuntimeException e) {
+            TakeScreenshot.screenshotPage(driver, "ERRO - " + texto);
+            throw e;
         }
-        String label = genericPage.getTextTitle().getText();
-        Assertions.assertEquals(texto,label);
     }
 
     public void validationProduto(){
 
-        String labelProduto = genericPage.getTextProduto().getText();
-        Assertions.assertEquals("Sauce Labs Onesie", labelProduto);
+        try {
+            Assertions.assertEquals("Sauce Labs Onesie", genericPage.getTextProduto().getText());
+            TakeScreenshot.screenshotPage(driver, "Selecionar Produto");
+        } catch (AssertionError | RuntimeException e) {
+            TakeScreenshot.screenshotPage(driver, "ERRO - Selecionar Produto");
+            throw e;
+        }
     }
 }

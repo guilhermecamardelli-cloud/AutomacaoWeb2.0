@@ -1,5 +1,6 @@
 package PageObjects;
 
+import Framework.Browser.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,35 +8,26 @@ import org.openqa.selenium.WebElement;
 public class LoginPage {
 
     private WebDriver driver;
+    private Waits waits;
 
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver){
 
         this.driver = driver;
-
+        waits = new Waits(this.driver);
     }
 
-    public WebElement getUserNameInput() {
+    public WebElement getUserNameInput(){
 
-        WebElement name = driver.findElement(By.id("user-name"));
-
-        return name;
-
-
+        return waits.visibilityOfElement(By.id("user-name"));
     }
 
-    public WebElement getPasswordInput() {
+    public WebElement getPasswordInput(){
 
-        WebElement name = driver.findElement(By.id("password"));
-
-        return name;
-
+        return waits.visibilityOfElement(By.id("password"));
     }
 
-    public WebElement getLoginButtonInput() {
+    public WebElement getLoginButton(){
 
-        WebElement name = driver.findElement(By.id("login-button"));
-
-        return name;
+        return waits.visibilityOfElement(By.id("login-button"));
     }
-
 }
